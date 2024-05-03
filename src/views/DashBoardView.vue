@@ -51,7 +51,7 @@
                     <div>
                         <p>{{task.created}}</p>
                     </div>
-                    <div class="d-flex justify-content-evenly w-100">
+                    <div class="d-flex justify-content-evenly w-100 h-25 align-items-center">
                         <div>
                             <p>{{task.taskdeadline}}</p>
                         </div>
@@ -72,24 +72,78 @@
 
         <div class="right_float">
             <div class="flex_right_align container">
-                Important things
+                <div class="mb-2 d-flex justify-content-evenly">
+                    <input type="text" class="rounded-3" placeholder="search" v-model="seachInput.search" @change="searchFn()"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search mx-2 border rounded-3" viewBox="0 0 16 16">
+                       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+                </div>
+                <div class="over_scroll mb-3 border border-3">
+                    <div v-for="tasks in searchFn()">
+                        <div class="small">
+                            <p class="fs-6">{{ tasks.taskname }}</p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="right_align_style py-3">
+                    <h5 class="text-white">Add new task</h5>
+                    <button class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="right_align_style py-3">
+                    <h5 class="text-white">Company Blog</h5>
+                    <button class="btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
 
     </div>
 </template>
 <script>
+import draggable from 'vuedraggable';
 export default {
+    data(){
+        return {
+            seachInput: {
+                search: ''
+            },
+            taskname: '',
+            taskdeadline: '',
+            completed: '',
+            created: ''
+            
+        }
+    },
+    components : {
+        draggable
+    },
     methods : {
         fetchTasks(){
             this.$store.dispatch('fetchTasks')
         },
         deleteTask(taskId){
             this.$store.dispatch('deleteTask', taskId)
+        },
+        searchFn(){
+            const arrOfTasks = this.$store.state.tasks;
+            let inp = this.seachInput.search;
+            let result = arrOfTasks.filter(t => {
+                return t.taskname.toLowerCase().includes(inp.toLocaleLowerCase())
+            })
+            return result
         }
     },
     mounted(){
         this.fetchTasks()
+        this.searchFn()
     }
 }
 </script>
@@ -111,6 +165,12 @@ export default {
         border: 1px solid rgba(130, 130, 255, 0.24);
     }
 
+    /* .pos_absolute{
+        position: absolute;
+        top: 10%;
+        left: 84%;
+    } */
+
     .left_float, .right_float{
         display: flex;
         justify-content: center;
@@ -131,6 +191,8 @@ export default {
         box-shadow: 3px 2px 10px 2px rgba(0, 0, 0, 0.307);
         border-radius: 10px;
         background: linear-gradient(rgb(187, 255, 254), rgb(149, 165, 246));
+        /* resize: both;
+        overflow: auto; */
     }
 
 
@@ -196,7 +258,7 @@ export default {
         right: -180%;
         bottom: 115%;
         animation-name: opx;
-        animation-duration: 0.6s;
+        animation-duration: 0.3s;
     }
 
     .delete{
@@ -219,7 +281,7 @@ export default {
         right: -180%;
         bottom: 115%;
         animation-name: opx;
-        animation-duration: 0.6s;
+        animation-duration: 0.3s;
     }
 
     @keyframes opx {
@@ -236,19 +298,20 @@ export default {
 
     .justify_to_fixed_position{
         height: 40px;
-        background: rgb(90, 79, 212);
+        background: rgb(255, 255, 255);
         display: flex;
         justify-content: center;
         width: 60%;
         gap: 70px;
         align-items: center;
         position: fixed;
-        top: 7.1%;
+        top: 8.091%;
+        box-shadow: 0px 1px 4px 0px rgba(23, 22, 22, 0.228);
     }
 
     .nav_px{
         text-decoration: none;
-        color: whitesmoke;
+        color: rgb(0, 0, 0);
         font-weight: bold;
     }
 
@@ -264,11 +327,22 @@ export default {
         border-radius: 5px;
     }
 
+    .over_scroll{
+        overflow-y: scroll;
+        max-height: 100px;
+    }
+
     .inner_block{
         background: white;
-        border-radius: 15px;
+        border-radius: 5px;
         /* resize: both;
         overflow: auto; */
+    }
+
+    .right_align_style{
+        border: 1px solid whitesmoke;
+        border-radius: 10px;
+        background-color: rgb(131, 86, 255);
     }
 
 
