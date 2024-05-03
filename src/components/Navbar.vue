@@ -14,10 +14,12 @@
          <ul>
            <li><router-link to="/">Home</router-link></li>
            <li><router-link to="/about">About our agency</router-link></li>
-           <li><router-link to="/">Mission</router-link></li>
-           <li><router-link to="/">Projects</router-link></li>
-           <li><router-link to="/">Reviews</router-link></li>
-           <li><router-link to="/">Contact</router-link></li>
+           <li><router-link to="/dashboard">Dashboard</router-link></li>
+           <li><router-link to="/">settings</router-link></li>
+           <li><router-link to="/">Manage website</router-link></li>
+           <li><router-link to="/">My tasks</router-link></li>
+           <li><router-link to="/">Friends</router-link></li>
+           <li><router-link to="/">Login</router-link></li>
            <li class="small"><a href="">LinkedIn</a><a href="" target="_blank">Github</a></li>
          </ul>
        </div>

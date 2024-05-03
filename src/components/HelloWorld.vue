@@ -6,15 +6,17 @@
       <img src="https://cdn-images.imagevenue.com/27/48/2e/ME1877EW_o.png" alt="" class="pos_abs">
       <div class="">
         <span class="text-start fs-4 text_xsm_shrink">- Digital marketing solutions -</span>
-        <h1 class="text_sm_shrink primary_text_color">Next generation digital marketing.</h1>
+        <h1 class="text_sm_shrink primary_text_color">Next generation Task managment.</h1>
         <div class="d-flex gap-4 justify-content-center flex_dir">
           <router-link to="/" class="px-4 py-1 text-decoration-none fw-bold styled_btn">Exlpore</router-link>
           <router-link to="/about" class="px-4 py-1 text-decoration-none fw-bold styled_btn">Company</router-link>
-          <router-link to="/" class="px-4 py-1 text-decoration-none fw-bold styled_btn">Contact</router-link>
+          <router-link to="/dashboard" class="px-4 py-1 text-decoration-none fw-bold styled_btn">Dashboard</router-link>
+          <router-link to="/login" class="px-4 py-1 text-decoration-none fw-bold styled_btn">Login</router-link>
         </div>
       </div>
     </div>
     <div class="bottom_justify">
+        <h2>Partners : </h2>
         <ul class="list-unstyled justify_bottom">
           <li class="primary_text_color">lorem ipsum</li>
           <li class="primary_text_color">lorem ipsum</li>
@@ -69,8 +71,8 @@ export default {
     bottom: .20%;
     left: 0%;
     z-index: 1;
-    border-right: 1px solid #560bad;
-    border-top: 1px solid #560bad;
+    /* border-right: 1px solid #560bad;
+    border-top: 1px solid #560bad; */
     border-top-right-radius: 137.5px;
   }
 

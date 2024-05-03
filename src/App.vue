@@ -1,4 +1,5 @@
 <template>
+  <CursorComVue />
   <header>
     <Navbar/>
   </header>
@@ -9,9 +10,11 @@
 
 <script>
 import Navbar from './components/Navbar.vue'
+import CursorComVue from './components/CursorCom.vue'
 export default {
   components : {
-    Navbar
+    Navbar,
+    CursorComVue
   }
 }
 </script>
