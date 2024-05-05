@@ -50,12 +50,12 @@ export default {
     left: 12px;
     top: 12px;
     border-radius: 50%;
-    background-color: #000000;
+    background-color: #9641f8;
     z-index: 5000;
     transform: translate(-50%, -50%);
     /* mix-blend-mode: difference; */
     pointer-events: none;
-    box-shadow: 1px 1px 7px 1px black;
+    /* box-shadow: 1px 1px 7px 1px black; */
     transition: width 0.9s, height 0.9s ease-in-out !important;
 }
 

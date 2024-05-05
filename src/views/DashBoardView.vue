@@ -69,6 +69,15 @@
             </div>
         </div>
 
+        <!-- <div class="modal_fixed container-fluid" id="modal" v-if="openMod.open === true" tabindex="-1" data-bs-target="#staticBackdrop">
+            <button @click="closeModal()" class="close_btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                </svg>
+            </button>
+        </div> -->
+
 
         <div class="right_float">
             <div class="flex_right_align container">
@@ -88,11 +97,40 @@
                 <hr>
                 <div class="right_align_style py-3">
                     <h5 class="text-white">Add new task</h5>
-                    <button class="btn">
+                    <!-- <button class="btn" @click="openModal()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                        </svg>
+                    </button> -->
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
                         </svg>
                     </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade modal_bounce" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                            <button type="button" class="close_btn" data-bs-dismiss="modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
                 <div class="right_align_style py-3">
                     <h5 class="text-white">Company Blog</h5>
@@ -115,6 +153,11 @@ export default {
             seachInput: {
                 search: ''
             },
+            openMod : {
+                clicked: false,
+                open: false,
+                closed: false
+            },
             taskname: '',
             taskdeadline: '',
             completed: '',
@@ -133,12 +176,31 @@ export default {
             this.$store.dispatch('deleteTask', taskId)
         },
         searchFn(){
-            const arrOfTasks = this.$store.state.tasks;
-            let inp = this.seachInput.search;
-            let result = arrOfTasks.filter(t => {
-                return t.taskname.toLowerCase().includes(inp.toLocaleLowerCase())
-            })
-            return result
+            try {
+                const arrOfTasks = this.$store.state.tasks;
+                let inp = this.seachInput.search;
+                let result = arrOfTasks.filter(t => {
+                    return t.taskname.toLowerCase().includes(inp.toLocaleLowerCase())
+                })
+                return result
+            } catch (error){
+                console.log(error);
+                throw new Error(error)
+            }
+        },
+        openModal(){
+            try {
+            this.openMod.clicked = true
+                if(this.openMod.clicked === true){
+                    this.openMod.open = true
+                }
+            } catch(error){
+                console.log(error);
+                throw new Error(error)
+            }
+        },
+        closeModal(){
+            this.openMod.open = false
         }
     },
     mounted(){
@@ -165,11 +227,39 @@ export default {
         border: 1px solid rgba(130, 130, 255, 0.24);
     }
 
-    /* .pos_absolute{
+    .modal_bounce{
+        animation-name: bounce;
+        animation-duration: 0.5s;
+        /* box-shadow: 10px 100px 1000px 10px rgb(158, 99, 158); */
+    }
+
+    .close_btn{
+        border: none;
+        background-color: rgba(255, 255, 255, 0);
+        height: 35px;
+        width: 35px;
         position: absolute;
-        top: 10%;
-        left: 84%;
-    } */
+        top: 1%;
+        right: 1%;
+    }
+
+    @keyframes bounce {
+        0%{
+            transform: scale(100%);
+        }
+        25%{
+            transform: scale(108%) translateY(-30px);
+        }
+        50%{
+            transform: scale(105%) translateY(0px);
+        }
+        75%{
+            transform: scale(108%) translateY(-30px);
+        }
+        100%{
+            transform: scale(100%);
+        }
+    }
 
     .left_float, .right_float{
         display: flex;
@@ -190,7 +280,7 @@ export default {
         border: 1px solid rgb(255, 255, 255);
         box-shadow: 3px 2px 10px 2px rgba(0, 0, 0, 0.307);
         border-radius: 10px;
-        background: linear-gradient(rgb(187, 255, 254), rgb(149, 165, 246));
+        background: linear-gradient(rgb(247, 247, 247), rgb(254, 254, 254));
         /* resize: both;
         overflow: auto; */
     }
