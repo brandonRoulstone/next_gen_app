@@ -1,5 +1,5 @@
 <template lang="">
-    <div id="align_to_center">
+    <div id="align_to_center" v-if="$cookies.get('jwt')">
 
         <div class="left_float">
             <div class="flex_left_align container">  
@@ -69,6 +69,41 @@
                     </div>
                 </div>
             </div>
+            <!-- // -->
+            <!-- // -->
+            <!-- // -->
+            <!-- // -->
+            <!-- // -->
+            <!-- // -->
+            <!-- // -->
+            <!-- // -->
+            <!-- <div class="scrollable_xlg py-3 px-3 mt-4" v-else>
+                <div v-for="task in $store.state.userTasks" v-bind:key="task.taskId">
+                    <div class="w- card_rem mb-2">
+                        <div class="container mt-3">
+                            casablanca
+                            <h5>{{task.taskname}}</h5>
+                        </div>
+                        <div>
+                            <p>{{task.created}}</p>
+                        </div>
+                        <div class="d-flex justify-content-evenly w-100 h-25 align-items-center">
+                            <div>
+                                <p>{{task.taskdeadline}}</p>
+                            </div>
+                            <div v-if="task.completed === 1">
+                                <input type="checkbox" class="" id="checkbox" checked v-modal="task.completed"/>
+                            </div>
+                            <div v-else>
+                                <input type="checkbox" class="" id="checkbox" v-modal="task.completed"/>
+                            </div>
+                            <button class="delete" @click="deleteTask(task.taskId)">
+                                <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
         </div>
 
         <!-- <div class="modal_fixed container-fluid" id="modal" v-if="openMod.open === true" tabindex="-1" data-bs-target="#staticBackdrop">
@@ -198,6 +233,9 @@ export default {
         fetchTasks(){
             this.$store.dispatch('fetchTasks')
         },
+        fetchUsersTasks(){
+            this.$store.dispatch('getUserData')
+        },
         deleteTask(taskId){
             this.$store.dispatch('deleteTask', taskId)
         },
@@ -234,6 +272,7 @@ export default {
     },
     mounted(){
         this.fetchTasks()
+        // this.fetchUsersTasks()
         this.searchFn()
     }
 }

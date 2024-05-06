@@ -6,7 +6,10 @@ axios.defaults.withCredentials = true
 export default createStore({
   state: {
     tasks: [],
-    assignedTasks: []
+    assignedTasks: [],
+
+    // user specific tasks
+    userTasks: []
   },
   getters: {
   },
@@ -17,10 +20,11 @@ export default createStore({
     accessAssignedTasksState(state, payload){
       state.assignedTasks = payload
     },
+    accessUserClientData(state, payload){
+      state.userTasks = payload
+    }
   },
   actions: {
-
-
     // admin config
     async fetchTasks(context){
       const {data} = await axios.get('http://localhost:3360/tasks')
@@ -58,6 +62,7 @@ export default createStore({
       localStorage.setItem('userActive', storage);
       await router.push('/dashBoard');
     },
+
     async logout(){
       const res = await axios.delete('http://localhost:3360/logout')
       $cookies.remove('jwt')
@@ -70,7 +75,20 @@ export default createStore({
     async signUp(context, userPayload){
       const res = await axios.post('http://localhost:3360/users', userPayload);
       alert("You have signed up successfully");
+    },
+
+    // user  specific config
+    async getUserData(context){
+      const data = await axios.get(`http://localhost:3360/assigned/${$cookies.get('userId')}`)
+      context.commit('accessUserClientData', data.data)
+    },
+
+    // will select user first by Id and send the task to user
+    async sendTask(context, tID, uID){
+      const res = await axios.post(`http://localhost:3360/myTasks/${tID}?user_id=${uID}`, tID, uID)
+      alert("sent task to user")
     }
+    
   },
   modules: {
   }

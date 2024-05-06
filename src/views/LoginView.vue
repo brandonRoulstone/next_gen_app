@@ -26,7 +26,6 @@
                     <button class="w-100 btn btn-lg btn-primary" type="submit" @click="login()">Login</button>
                     <hr class="my-4">
                     <small class="text-body-secondary">Dont have an acc <router-link to="/signUp">click here</router-link></small>
-
                 </div>
             </div>
         </div>

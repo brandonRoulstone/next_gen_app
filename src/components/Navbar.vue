@@ -13,13 +13,14 @@
        <div id="nav-content" tabindex="0">
          <ul>
            <li><router-link to="/">Home</router-link></li>
-           <li><router-link to="/about">About our agency</router-link></li>
-           <li><router-link to="/dashboard">Dashboard</router-link></li>
-           <li><router-link to="/">settings</router-link></li>
+           <li><router-link to="/about">About</router-link></li>
+           <li><router-link to="/dashboard" v-if="$cookies.get('jwt')">Dashboard</router-link></li>
            <li v-if="$cookies.get('role') === 'admin'"><router-link to="/">Manage website</router-link></li>
-           <li><router-link to="/">My tasks</router-link></li>
-           <li><router-link to="/">Friends</router-link></li>
+           <li><router-link to="/" v-if="$cookies.get('jwt')">My tasks</router-link></li>
+           <li><router-link to="/" v-if="$cookies.get('jwt')">Friends</router-link></li>
+           <li><router-link to="/" v-if="$cookies.get('jwt')">settings</router-link></li>
            <li><router-link to="/signUp">Login</router-link></li>
+           <li><router-link to="/" v-if="$cookies.get('jwt')">Logut</router-link></li>
            <li class="small"><a href="">LinkedIn</a><a href="" target="_blank">Github</a></li>
          </ul>
        </div>
