@@ -38,4 +38,9 @@ export default {
   text-align: center;
   color: #181819;
 }
+
+::selection{
+  background-color: rgb(175, 90, 255);
+  color: black;
+}
 </style>

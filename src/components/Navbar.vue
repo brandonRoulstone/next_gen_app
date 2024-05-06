@@ -16,10 +16,10 @@
            <li><router-link to="/about">About our agency</router-link></li>
            <li><router-link to="/dashboard">Dashboard</router-link></li>
            <li><router-link to="/">settings</router-link></li>
-           <li><router-link to="/">Manage website</router-link></li>
+           <li v-if="$cookies.get('role') === 'admin'"><router-link to="/">Manage website</router-link></li>
            <li><router-link to="/">My tasks</router-link></li>
            <li><router-link to="/">Friends</router-link></li>
-           <li><router-link to="/">Login</router-link></li>
+           <li><router-link to="/signUp">Login</router-link></li>
            <li class="small"><a href="">LinkedIn</a><a href="" target="_blank">Github</a></li>
          </ul>
        </div>

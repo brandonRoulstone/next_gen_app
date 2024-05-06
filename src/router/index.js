@@ -17,14 +17,19 @@ const routes = [
   },
   {
     path: '/dashBoard',
-    name: 'dashboard',
+    name: 'dashBoard',
     component: () => import('../views/DashBoardView.vue')
   },
   {
     path: '/login',
     name: 'login',
     component: () => import('../views/LoginView.vue')
-  }
+  },
+  {
+    path: '/signUp',
+    name: 'signUp',
+    component: () => import('../views/SignUp.vue')
+  },
 ]
 
 const router = createRouter({

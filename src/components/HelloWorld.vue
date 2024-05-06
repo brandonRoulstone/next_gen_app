@@ -5,6 +5,7 @@
       <!-- <img src="https://cdn-images.imagevenue.com/b2/57/64/ME1876NR_o.png" alt="logo_img" class="img img-fluid" height="200" width="200"> -->
       <img src="https://cdn-images.imagevenue.com/27/48/2e/ME1877EW_o.png" alt="" class="pos_abs">
       <div class="">
+        <!-- <img src="https://cdn-.imagevenue.com/e0/d1/71/ME187T0H_o.png" alt="" height="70px" width="100px"> -->
         <span>- Unreal touch UI -</span>
         <br>
         <span class="text-start fs-4 text_xsm_shrink">- Digital marketing solutions -</span>

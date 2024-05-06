@@ -44,16 +44,19 @@ export default createStore({
     // login config
     async login(context, userPayloadIsValid){
       const validateInfo = await axios.post('http://localhost:3360/login', userPayloadIsValid)
+      // console.log(validateInfo.data.userRole);
+      // console.log(validateInfo.data);
       $cookies.set('jwt', validateInfo.data.token)
       $cookies.set('role', validateInfo.data.userRole)
+      console.log("role: " + validateInfo.data.userRole);
       
-      const [user] = validateInfo.data.userInServer
+      const [user] = validateInfo.data.userInServer;
       $cookies.set('userId', user.user_id)
 
       const userInServ = validateInfo.data.userInServer;
       const storage = JSON.stringify(userInServ);
       localStorage.setItem('userActive', storage);
-      await router.push('/dashboard');
+      await router.push('/dashBoard');
     },
     async logout(){
       const res = await axios.delete('http://localhost:3360/logout')
@@ -63,6 +66,10 @@ export default createStore({
       localStorage.removeItem('userActive')
       console.log(res.data.msg)
       router.push('/login')
+    },
+    async signUp(context, userPayload){
+      const res = await axios.post('http://localhost:3360/users', userPayload);
+      alert("You have signed up successfully");
     }
   },
   modules: {
