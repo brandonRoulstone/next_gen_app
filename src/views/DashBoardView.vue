@@ -43,7 +43,7 @@
                 <router-link to="/" class="nav_px">Software version</router-link>
             </nav>
 
-            <div class="scrollable_xlg py-3 px-3 mt-4">
+            <div class="scrollable_xlg py-3 px-3 mt-4" v-if="$cookies.get('role') === 'admin'">
                 <div v-for="task in $store.state.tasks" v-bind:key="task.taskId">
                     <div class="w- card_rem mb-2">
                         <div class="container mt-3">
@@ -77,7 +77,7 @@
             <!-- // -->
             <!-- // -->
             <!-- // -->
-            <!-- <div class="scrollable_xlg py-3 px-3 mt-4" v-else>
+            <div class="scrollable_xlg py-3 px-3 mt-4" v-else>
                 <div v-for="task in $store.state.userTasks" v-bind:key="task.taskId">
                     <div class="w- card_rem mb-2">
                         <div class="container mt-3">
@@ -103,7 +103,37 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
+            <div class="scrollable_xlg py-3 px-3 mt-4" v-else>
+                <div v-for="task in $store.state.userTasks" v-bind:key="task.taskId" v-if="$store.state.userTasks.length > 0">
+                    <div class="w- card_rem mb-2">
+                        <div class="container mt-3">
+                            
+                            <h5>{{task.taskname}}</h5>
+                        </div>
+                        <div>
+                            <p>{{task.created}}</p>
+                        </div>
+                        <div class="d-flex justify-content-evenly w-100 h-25 align-items-center">
+                            <div>
+                                <p>{{task.taskdeadline}}</p>
+                            </div>
+                            <div v-if="task.completed === 1">
+                                <input type="checkbox" class="" id="checkbox" checked v-modal="task.completed"/>
+                            </div>
+                            <div v-else>
+                                <input type="checkbox" class="" id="checkbox" v-modal="task.completed"/>
+                            </div>
+                            <button class="delete" @click="deletePersonalTask(task.taskId)">
+                                <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div v-else>
+                    no tasks
+                </div>
+            </div>
         </div>
 
         <!-- <div class="modal_fixed container-fluid" id="modal" v-if="openMod.open === true" tabindex="-1" data-bs-target="#staticBackdrop">
@@ -268,11 +298,14 @@ export default {
         },
         addTask(){
             this.$store.dispatch('addTask', this.$data)
+        },
+        deletePersonalTask(taskId){
+            this.$store.dispatch('deletePersonalTask', taskId)
         }
     },
     mounted(){
         this.fetchTasks()
-        // this.fetchUsersTasks()
+        this.fetchUsersTasks()
         this.searchFn()
     }
 }
@@ -346,7 +379,7 @@ export default {
         justify-content: center;
         align-items: center;
         border-radius: 20px;
-        background-color: rgb(230, 204, 255);
+        background-color: #FAF9F6;
         color: rgb(0, 0, 0);
     }
 
@@ -384,7 +417,7 @@ export default {
         align-items: center;
         min-height: 100vh;
         min-width: 20vw;
-        box-shadow: 1px 10px 17px 10px rgba(34, 34, 35, 0.366);
+        box-shadow: 1px 10px 17px 10px rgba(34, 34, 35, 0.125);
         background-color: #FAF9F6;
     }
 
@@ -399,7 +432,7 @@ export default {
         box-shadow: 3px 2px 10px 2px rgba(0, 0, 0, 0.307);
         border-radius: 10px;
         color: black;
-        background: linear-gradient(rgb(228, 215, 255), rgb(230, 207, 255));
+        background: linear-gradient(rgb(228, 215, 255), #FAF9F6);
         /* resize: both;
         overflow: auto; */
     }
@@ -515,8 +548,8 @@ export default {
         gap: 70px;
         align-items: center;
         position: fixed;
-        top: 8.091%;
-        box-shadow: 0px 1px 4px 0px rgba(23, 22, 22, 0.228);
+        top: 7.20%;
+        box-shadow: 0px 1px 4px 0px rgba(23, 22, 22, 0.097);
     }
 
     .nav_px{
@@ -528,8 +561,8 @@ export default {
     .bs_card_flexed{
         height: 300px;
         width: auto;
-        background: rgb(236, 234, 234);
-        border: 1px solid rgba(128, 0, 128, 0.329);
+        background: #efede7;
+        border: 1px solid rgba(0, 0, 0, 0.329);
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         justify-content: center;
@@ -559,9 +592,9 @@ export default {
     }
 
     .right_align_style{
-        border: 1px solid whitesmoke;
+        border: 1px solid rgb(119, 61, 195);
         border-radius: 10px;
-        background-color: rgb(131, 86, 255);
+        background-color: #000000;
     }
 
 

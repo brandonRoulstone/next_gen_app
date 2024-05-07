@@ -44,7 +44,6 @@ export default createStore({
       console.log(`edited item:  ${update.taskId}`);
     },
 
-
     // login config
     async login(context, userPayloadIsValid){
       const validateInfo = await axios.post('http://localhost:3360/login', userPayloadIsValid)
@@ -61,6 +60,7 @@ export default createStore({
       const storage = JSON.stringify(userInServ);
       localStorage.setItem('userActive', storage);
       await router.push('/dashBoard');
+      window.location.reload()
     },
 
     async logout(){
@@ -79,14 +79,21 @@ export default createStore({
 
     // user  specific config
     async getUserData(context){
-      const data = await axios.get(`http://localhost:3360/assigned/${$cookies.get('userId')}`)
-      context.commit('accessUserClientData', data.data)
+      const res = await axios.get(`http://localhost:3360/assigned/${$cookies.get('userId')}`)
+      context.commit('accessUserClientData', res.data.tasks)
+      const s = res.data.tasks
+      console.log(s);
+      // console.log(data.data);
     },
 
     // will select user first by Id and send the task to user
     async sendTask(context, tID, uID){
       const res = await axios.post(`http://localhost:3360/myTasks/${tID}?user_id=${uID}`, tID, uID)
       alert("sent task to user")
+    },
+    async deletePersonalTask(context, tID){
+      const res = await axios.delete(`http://localhost:3360/myTasks/${tID}?user_id=${$cookies.get('userId')}`)
+      window.location.reload();
     }
     
   },
