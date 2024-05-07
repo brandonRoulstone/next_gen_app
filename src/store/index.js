@@ -87,12 +87,17 @@ export default createStore({
     },
 
     // will select user first by Id and send the task to user
-    async sendTask(context, tID, uID){
-      const res = await axios.post(`http://localhost:3360/myTasks/${tID}?user_id=${uID}`, tID, uID)
+    async sendTask(context, tID){
+      const res = await axios.post(`http://localhost:3360/myTasks/${tID.taskId}?user_id=${tID.user_id}`, tID)
       alert("sent task to user")
     },
     async deletePersonalTask(context, tID){
       const res = await axios.delete(`http://localhost:3360/myTasks/${tID}?user_id=${$cookies.get('userId')}`)
+      window.location.reload();
+    },
+    async editPersonalTask(context, update){
+      const res = await axios.patch(`http://localhost:3360/tasks/${update.taskId}`, update)
+      alert("task was edited");
       window.location.reload();
     }
     

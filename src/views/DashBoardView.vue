@@ -35,13 +35,6 @@
         </div>
 
         <div class="flex_align container-fluid">
-            <nav class="justify_to_fixed_position">
-                <router-link to="/" class="nav_px">My Colleagues</router-link>
-                <router-link to="/" class="nav_px">Collaboration</router-link>
-                <router-link to="/" class="nav_px">Find A job</router-link>
-                <router-link to="/" class="nav_px">Recent Tasks</router-link>
-                <router-link to="/" class="nav_px">Software version</router-link>
-            </nav>
 
             <div class="scrollable_xlg py-3 px-3 mt-4" v-if="$cookies.get('role') === 'admin'">
                 <div v-for="task in $store.state.tasks" v-bind:key="task.taskId">
@@ -57,53 +50,28 @@
                                 <p>{{task.taskdeadline}}</p>
                             </div>
                             <div v-if="task.completed === 1">
-                                <input type="checkbox" class="" id="checkbox" checked v-modal="task.completed"/>
+                                <input type="checkbox" id="checkbox" checked v-modal="task.completed"/>
                             </div>
                             <div v-else>
-                                <input type="checkbox" class="" id="checkbox" v-modal="task.completed"/>
+                                <input type="checkbox" id="checkbox" v-modal="task.completed"/>
                             </div>
                             <button class="delete" @click="deleteTask(task.taskId)">
                                 <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
+                            </button>
+                            <button class="edit">
+                                <i class="fa-solid fa-pencil fa-lg" style="color: #9433ee;"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- // -->
             <!-- // -->
             <!-- // -->
             <!-- // -->
             <!-- // -->
-            <!-- // -->
-            <!-- // -->
-            <!-- // -->
-            <div class="scrollable_xlg py-3 px-3 mt-4" v-else>
-                <div v-for="task in $store.state.userTasks" v-bind:key="task.taskId">
-                    <div class="w- card_rem mb-2">
-                        <div class="container mt-3">
-                            casablanca
-                            <h5>{{task.taskname}}</h5>
-                        </div>
-                        <div>
-                            <p>{{task.created}}</p>
-                        </div>
-                        <div class="d-flex justify-content-evenly w-100 h-25 align-items-center">
-                            <div>
-                                <p>{{task.taskdeadline}}</p>
-                            </div>
-                            <div v-if="task.completed === 1">
-                                <input type="checkbox" class="" id="checkbox" checked v-modal="task.completed"/>
-                            </div>
-                            <div v-else>
-                                <input type="checkbox" class="" id="checkbox" v-modal="task.completed"/>
-                            </div>
-                            <button class="delete" @click="deleteTask(task.taskId)">
-                                <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
             <div class="scrollable_xlg py-3 px-3 mt-4" v-else>
                 <div v-for="task in $store.state.userTasks" v-bind:key="task.taskId" v-if="$store.state.userTasks.length > 0">
                     <div class="w- card_rem mb-2">
@@ -119,19 +87,56 @@
                                 <p>{{task.taskdeadline}}</p>
                             </div>
                             <div v-if="task.completed === 1">
-                                <input type="checkbox" class="" id="checkbox" checked v-modal="task.completed"/>
+                                <input type="checkbox" id="checkbox" checked v-modal="task.completed"/>
                             </div>
                             <div v-else>
-                                <input type="checkbox" class="" id="checkbox" v-modal="task.completed"/>
+                                <input type="checkbox" id="checkbox" v-modal="task.completed"/>
                             </div>
                             <button class="delete" @click="deletePersonalTask(task.taskId)">
                                 <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
                             </button>
+                            <button class="edit"  data-bs-toggle="modal" :data-bs-target="'#staticBackdrop' + task.taskId">
+                                <i class="fa-solid fa-pencil fa-lg" style="color: #9433ee;"></i>
+                            </button>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" :id="'staticBackdrop' + task.taskId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text w-25" id="addon-wrapping">Task name</span>
+                                            <input v-model="taskname" type="text" class="form-control" placeholder="Task name" aria-label="Task name" aria-describedby="addon-wrapping">
+                                        </div>
+                                        <div class="input-group flex-nowrap mt-2">
+                                            <span class="input-group-text w-25" id="addon-wrapping">Due date</span>
+                                            <input v-model="taskdeadline" type="text" class="form-control" placeholder="Task due date" aria-label="Task due date" aria-describedby="addon-wrapping">
+                                        </div>
+                                        <div class="input-group flex-nowrap mt-2">
+                                            <span class="input-group-text w-25" id="addon-wrapping">Completion</span>
+                                            <input v-model="completed" type="text" class="form-control" placeholder="1 for completed 0 for not" aria-label="Task dcompletion" aria-describedby="addon-wrapping">
+                                        </div>
+                                        <div class="input-group flex-nowrap mt-2">
+                                            <span class="input-group-text w-25" id="addon-wrapping">Created</span>
+                                            <input v-model="created" type="text" class="form-control" placeholder="Task timestamp" aria-label="Task timestamp" aria-describedby="addon-wrapping" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-outline-primary" @click="editPersonalTask(task.taskId)">Save my changes <i class="fa-solid fa-check fa-lg" style="color: green;"></i></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    
                 </div>
                 <div v-else>
-                    no tasks
+                    no tasks available
                 </div>
             </div>
         </div>
@@ -157,6 +162,10 @@
                 </div>
 
                 <div class="over_scroll mb-3 border border-3 resize_option_y">
+                    <p class="mt-3">Your tasks you can assign:</p>
+                    <span class="d-flex justify-content-center">
+                        <hr class="w-50">
+                    </span>
                     <div v-for="tasks in searchFn()">
                         <div class="small container text-start mt-2 card_in_sRes d-flex justify-content-center">
                             <div class="d-flex container-fluid w-100 justify-content-center align-items-center">
@@ -168,10 +177,43 @@
                                     </div>
                                 </div>
                             </div>
+                            <div>
+                                <button class="send" @click="openModal()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                      <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <hr>
+                <div class="right_align_style h_100 py-3 my-3" v-if="openMod.open === true">
+
+                    <div class="modal_fixed container" id="modal">
+                        
+                        <div class="justify_container">
+
+                            <input type="text" class="w-100" v-model="sendTaskToPeerId.user_id" id="userId">
+                            
+                            <input type="text" class="w-100 mt-2" v-model="sendTaskToPeerId.taskId" id="taskId">
+
+                        </div>
+
+                        <button @click="closeModal()" class="close_btn btn mt-2 mx-1">
+                            close <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                        </button>
+                        <button @click="sendTaskToPeer(sendTaskToPeerId.taskId, sendTaskToPeerId.user_id)" class="close_btn btn mt-2 mx-1">
+                            send <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z"/>
+                                </svg>
+                        </button>
+                    </div>
+                </div>
+
                 <div class="right_align_style py-3">
                     <h5 class="text-white">Add new task</h5>
                     <!-- <button class="btn" @click="openModal()">
@@ -187,58 +229,62 @@
 
                     <!-- Modal -->
                     <div class="modal fade modal_bounce" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content styled_modal">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                            <button type="button" class="close_btn" data-bs-dismiss="modal">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div>
-                                <div class="input-group flex-nowrap">
-                                    <span class="input-group-text w-25" id="addon-wrapping">Task name</span>
-                                    <input v-model="taskname" type="text" class="form-control" placeholder="Task name" aria-label="Task name" aria-describedby="addon-wrapping">
+
+                        <div class="modal-dialog modal-dialog-centered">
+
+                            <div class="modal-content styled_modal">
+
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <button type="button" class="close_btn" data-bs-dismiss="modal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                        </svg>
+                                    </button>
                                 </div>
-                                <div class="input-group flex-nowrap mt-2">
-                                    <span class="input-group-text w-25" id="addon-wrapping">Due date</span>
-                                    <input v-model="taskdeadline" type="text" class="form-control" placeholder="Task due date" aria-label="Task due date" aria-describedby="addon-wrapping">
+
+                                <div class="modal-body">
+                                    <div>
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text w-25" id="addon-wrapping">Task name</span>
+                                            <input v-model="taskname" type="text" class="form-control" placeholder="Task name" aria-label="Task name" aria-describedby="addon-wrapping">
+                                        </div>
+                                        <div class="input-group flex-nowrap mt-2">
+                                            <span class="input-group-text w-25" id="addon-wrapping">Due date</span>
+                                            <input v-model="taskdeadline" type="text" class="form-control" placeholder="Task due date" aria-label="Task due date" aria-describedby="addon-wrapping">
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <div class="modal-footer">
+                                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                    <button type="button" class="btn btn-primary" @click="addTask()">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                                        </svg> Add task 
+                                    </button>
+                                </div>
+
                             </div>
-                        </div>
-                        <div class="modal-footer">
-                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                            <button type="button" class="btn btn-primary" @click="addTask()">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                   <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                                </svg> Add task 
-                            </button>
-                        </div>
-                        </div>
+
+                         </div>
                     </div>
-                    </div>
+
                 </div>
-                <div class="right_align_style py-3 mt-3">
-                    <h5 class="text-white">Company Blog</h5>
-                    <button class="btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
-                        </svg>
-                    </button>
-                </div>
+
             </div>
+
         </div>
 
     </div>
+
 </template>
 <script>
 import draggable from 'vuedraggable';
 export default {
     data(){
+
         return {
             seachInput: {
                 search: ''
@@ -248,12 +294,20 @@ export default {
                 open: false,
                 closed: false
             },
+            taskId: null,
             taskname: '',
             taskdeadline: '',
             completed: '',
             created: '',
             
-            stateOfCompletion: 0
+            stateOfCompletion: 0,
+
+            sendTaskToPeerId : {
+                user_id : null,
+                taskId: null
+            }
+
+
         }
     },
     components : {
@@ -301,6 +355,19 @@ export default {
         },
         deletePersonalTask(taskId){
             this.$store.dispatch('deletePersonalTask', taskId)
+        },
+        editPersonalTask(taskId){
+            let TaskObjx = {
+                taskId: taskId,
+                taskname: this.taskname,
+                taskdeadline: this.taskdeadline,
+                completed: this.completed,
+                created: this.created
+            }
+            this.$store.dispatch('editPersonalTask', TaskObjx)
+        },
+        sendTaskToPeer(taskId, user_id){
+            this.$store.dispatch('sendTask', this.$data)
         }
     },
     mounted(){
@@ -318,6 +385,16 @@ export default {
         min-height: 100vh;
         flex-direction: row;
         background-color: rgb(255, 255, 255);
+    }
+
+    .justify_container{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .h_100{
+        height: 140px;
     }
 
     .flex_align{
@@ -348,13 +425,10 @@ export default {
     }
 
     .close_btn{
-        border: none;
+        border: 1px solid white;
+        color: whitesmoke !important;
         background-color: rgba(255, 255, 255, 0);
-        height: 35px;
-        width: 35px;
-        position: absolute;
-        top: 1%;
-        right: 1%;
+
     }
 
     #complete, #incomplete{
@@ -451,7 +525,7 @@ export default {
         cursor: pointer;
     }
 
-    .delete {
+    .delete, .edit, .send {
         appearance: none;
         border-radius: 5px;
         display: inline-block;
@@ -503,7 +577,7 @@ export default {
         animation-duration: 0.3s;
     }
 
-    .delete{
+    .delete, .edit, .send{
         background: none;
         border: none;
     }
@@ -521,6 +595,40 @@ export default {
         width: 100px !important;
         background-color: #ff0000;
         right: -210%;
+        bottom: 130%;
+        animation-name: opx;
+        animation-duration: 0.3s;
+    }
+    .edit:hover::after{
+        position: absolute;
+        content: "Edit";
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px !important;
+        border-radius: 5px;
+        text-align: center;
+        color: white;
+        width: 100px !important;
+        background-color: #9433ee;
+        right: -210%;
+        bottom: 130%;
+        animation-name: opx;
+        animation-duration: 0.3s;
+    }
+    .send:hover::after{
+        position: absolute;
+        content: "send to a peer";
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px !important;
+        border-radius: 5px;
+        text-align: center;
+        color: white;
+        width: 100px !important;
+        background-color: #9433ee;
+        right: -10%;
         bottom: 130%;
         animation-name: opx;
         animation-duration: 0.3s;
