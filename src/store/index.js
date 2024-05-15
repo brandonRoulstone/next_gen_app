@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import router from '@/router'
 import axios from 'axios'
 axios.defaults.withCredentials = true
+import { toast } from "vue3-toastify";
 
 export default createStore({
   state: {
@@ -30,15 +31,23 @@ export default createStore({
       const {data} = await axios.get('http://localhost:3360/tasks')
       context.commit('accessTaskState', data)
     },
+
     async addTask(context,userPayload){
       const res = await axios.post('http://localhost:3360/tasks', userPayload)
-      alert("added new task")
+      toast.success("Your task was successfully added!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      setTimeout(() => {
+        window.location.reload()
+      }, 4000);
     },
+
     async deleteTask(context, taskId){
       const res = await axios.delete(`http://localhost:3360/tasks/${taskId}`)
       console.log(`deleted item:  ${taskId}`);
       window.location.reload()
     },
+
     async updateTask(context, update){
       const res = await axios.patch(`http://localhost:3360/tasks/${update.taskId}`, update)
       console.log(`edited item:  ${update.taskId}`);
@@ -47,20 +56,32 @@ export default createStore({
     // login config
     async login(context, userPayloadIsValid){
       const validateInfo = await axios.post('http://localhost:3360/login', userPayloadIsValid)
-      // console.log(validateInfo.data.userRole);
-      // console.log(validateInfo.data);
-      $cookies.set('jwt', validateInfo.data.token)
-      $cookies.set('role', validateInfo.data.userRole)
+
+      $cookies.set('jwt', validateInfo.data.token);
+
+      $cookies.set('role', validateInfo.data.userRole);
+
       console.log("role: " + validateInfo.data.userRole);
       
       const [user] = validateInfo.data.userInServer;
+
       $cookies.set('userId', user.user_id)
 
       const userInServ = validateInfo.data.userInServer;
+
       const storage = JSON.stringify(userInServ);
+
       localStorage.setItem('userActive', storage);
+
+      toast.success(validateInfo.data.msg, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      
       await router.push('/dashBoard');
-      window.location.reload()
+      setTimeout(() => {
+        window.location.reload()
+      }, 3000);
+      
     },
 
     async logout(){
@@ -70,11 +91,29 @@ export default createStore({
       $cookies.remove('userId')
       localStorage.removeItem('userActive')
       console.log(res.data.msg)
-      router.push('/login')
+      
+      await router.push('/login')
+
+      toast.success(res.data.msg, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 3000);
     },
+
     async signUp(context, userPayload){
       const res = await axios.post('http://localhost:3360/users', userPayload);
-      alert("You have signed up successfully");
+
+      toast.success("Signed up successfully you will be redirected", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 3000);
+
     },
 
     // user  specific config
@@ -83,22 +122,55 @@ export default createStore({
       context.commit('accessUserClientData', res.data.tasks)
       const s = res.data.tasks
       console.log(s);
-      // console.log(data.data);
     },
 
     // will select user first by Id and send the task to user
     async sendTask(context, tID){
-      const res = await axios.post(`http://localhost:3360/myTasks/${tID.taskId}?user_id=${tID.user_id}`, tID)
-      alert("sent task to user")
+
+      const res = await axios.post(`http://localhost:3360/myTasks/${tID}?user_id=${tID}`, tID)
+      toast.success("Your task was successfully sent", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000);
+      
     },
+
     async deletePersonalTask(context, tID){
       const res = await axios.delete(`http://localhost:3360/myTasks/${tID}?user_id=${$cookies.get('userId')}`)
-      window.location.reload();
+      toast.success("Your task was edited", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000);
     },
+
     async editPersonalTask(context, update){
       const res = await axios.patch(`http://localhost:3360/tasks/${update.taskId}`, update)
-      alert("task was edited");
-      window.location.reload();
+      toast.success("Your task was edited", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000);
+    },
+    
+    async completeTask(context, update){
+      const res = await axios.patch(`http://localhost:3360/myTasks/${update.taskId}`, update);
+
+      toast.success("Task is completed!", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000);
+
     }
     
   },

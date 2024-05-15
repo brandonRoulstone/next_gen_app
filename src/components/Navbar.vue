@@ -1,3 +1,4 @@
+import { default } from '../views/DashBoardView.vue';
 <template>
     <div id="navbar" class="bg-white"> 
      <nav class="navbar bg-white">
@@ -13,15 +14,10 @@
        <div id="nav-content" tabindex="0">
          <ul>
            <li><router-link to="/">Home</router-link></li>
-           <li><router-link to="/about">About</router-link></li>
            <li><router-link to="/dashboard" v-if="$cookies.get('jwt')">Dashboard</router-link></li>
-           <li v-if="$cookies.get('role') === 'admin'"><router-link to="/">Manage website</router-link></li>
            <li><router-link to="/" v-if="$cookies.get('jwt')">My tasks</router-link></li>
            <li><router-link to="/" v-if="$cookies.get('jwt')">Friends</router-link></li>
-           <li><router-link to="/" v-if="$cookies.get('jwt')">settings</router-link></li>
-           <li><router-link to="/signUp">Login</router-link></li>
-           <li><router-link to="/" v-if="$cookies.get('jwt')">Logut</router-link></li>
-           <li class="small"><a href="">LinkedIn</a><a href="" target="_blank">Github</a></li>
+           <li class="small gap-2"><router-link to="/signUp" v-if="!$cookies.get('jwt')"><button class="btn px-4 py-1 btn_login">Login</button></router-link><button v-if="$cookies.get('jwt')" class="btn btn_logout px-4 py-1" @click="logOut()">Logout</button></li>
          </ul>
        </div>
      </div>
@@ -29,12 +25,29 @@
     </nav>
    </div>
    </template>
+
+   <script>
+    export default {
+      methods: {
+        logOut(){
+          this.$store.dispatch('logout')
+        },
+      },
+    }
+  </script>
+
    <style scoped>
    #navbar{
      position: fixed;
      top: -1%;
      z-index: 2000;
    }
+
+   .btn_logout{
+    background-color: rgb(255, 35, 35);
+    color: white;
+   }
+
     header{
      background: rgb(243, 243, 243);
      backdrop-filter: blur(12px);
@@ -194,7 +207,10 @@
    .small a {
      font-size: 12px;
      font-weight: 400;
-     color: #888;
+     color: #ffffff;
+     background-color: green;
+     width: 100%;
+     align-items: center;
    }
    .small a + a {
      margin-left: 15px;

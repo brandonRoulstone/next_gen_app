@@ -12,20 +12,10 @@
         <h1 class="text_sm_shrink primary_text_color">Next generation Task managment.</h1>
         <div class="d-flex gap-4 justify-content-center flex_dir">
           <router-link to="/" class="px-4 py-1 text-decoration-none fw-bold styled_btn">Exlpore</router-link>
-          <router-link to="/about" class="px-4 py-1 text-decoration-none fw-bold styled_btn">Company</router-link>
           <router-link to="/dashboard" class="px-4 py-1 text-decoration-none fw-bold styled_btn" v-if="$cookies.get('jwt')">Dashboard</router-link>
-          <router-link to="/login" class="px-4 py-1 text-decoration-none fw-bold styled_btn">Login</router-link>
+          <router-link to="/login" class="px-4 py-1 text-decoration-none fw-bold styled_btn" v-if="!$cookies.get('jwt')">Login</router-link>
         </div>
       </div>
-    </div>
-    <div class="bottom_justify">
-      <ul class="list-unstyled justify_bottom">
-        <li class="primary_text_color">lorem ipsum</li>
-        <li class="primary_text_color">lorem ipsum</li>
-        <li class="primary_text_color">lorem ipsum</li>
-        <li class="primary_text_color">lorem ipsum</li>
-      </ul>
-      <!-- <h2>Partners : </h2> -->
     </div>
   </div>
 </template>
@@ -33,9 +23,6 @@
 <script>
 export default {
   name: 'HelloWorld',
-  // props: {
-  //   msg: String
-  // }
 }
 </script>
 
@@ -79,67 +66,6 @@ export default {
     border-top-right-radius: 137.5px;
   }
 
-  .bottom_justify{
-    position: absolute;
-    bottom: 0;
-    right: 0.5%;
-    font-weight: 700;
-    font-size: 18px;
-    cursor: pointer !important;
-    z-index: 222;
-  }
-  .bottom_justify li:nth-child(1):hover::before{
-    content: "lorem";
-    color: white;
-    border-radius: 10px;
-    text-align: center;
-    position: absolute;
-    height: 30px;
-    width: 115px;
-    background-color: purple;
-    top: -65%;
-    animation-name: trans;
-    animation-duration: 0.4s;
-  }
-  .bottom_justify li:nth-child(2):hover::before{
-    content: "ipsum";
-    color: white;
-    border-radius: 10px;
-    text-align: center;
-    position: absolute;
-    height: 30px;
-    width: 115px;
-    background-color: purple;
-    top: -65%;
-    animation-name: trans;
-    animation-duration: 0.4s;
-  }
-  .bottom_justify li:nth-child(3):hover::before{
-    content: "dolor";
-    color: white;
-    border-radius: 10px;
-    text-align: center;
-    position: absolute;
-    height: 30px;
-    width: 115px;
-    background-color: purple;
-    top: -65%;
-    animation-name: trans;
-    animation-duration: 0.4s;
-  }
-  .bottom_justify li:nth-child(4):hover::before{
-    content: "anciet";
-    color: white;
-    border-radius: 10px;
-    text-align: center;
-    position: absolute;
-    height: 30px;
-    width: 115px;
-    background-color: purple;
-    top: -65%;
-    animation-name: trans;
-    animation-duration: 0.4s;
-  }
 
   .styled_btn {
     --color: #560bad;
