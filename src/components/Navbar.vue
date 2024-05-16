@@ -15,8 +15,8 @@ import { default } from '../views/DashBoardView.vue';
          <ul>
            <li><router-link to="/">Home</router-link></li>
            <li><router-link to="/dashboard" v-if="$cookies.get('jwt')">Dashboard</router-link></li>
-           <li><router-link to="/" v-if="$cookies.get('jwt')">My tasks</router-link></li>
-           <li><router-link to="/" v-if="$cookies.get('jwt')">Friends</router-link></li>
+           <!-- <li><router-link to="/" v-if="$cookies.get('jwt')">My tasks</router-link></li> -->
+           <!-- <li><router-link to="/" v-if="$cookies.get('jwt')">Users</router-link></li> -->
            <li class="small gap-2"><router-link to="/signUp" v-if="!$cookies.get('jwt')"><button class="btn px-4 py-1 btn_login">Login</button></router-link><button v-if="$cookies.get('jwt')" class="btn btn_logout px-4 py-1" @click="logOut()">Logout</button></li>
          </ul>
        </div>

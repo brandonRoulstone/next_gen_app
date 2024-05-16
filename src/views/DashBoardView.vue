@@ -252,13 +252,19 @@
 
         </div>
 
+        <div class="fxd">
+            <bottomNavVue />
+        </div>
+
     </div>
 
 </template>
 <script>
 import draggable from 'vuedraggable';
+// import bottomNavVue
 import postTask from '../components/postTask.vue'
 import { toast } from "vue3-toastify";
+import bottomNavVue from '@/components/bottomNav.vue';
 export default {
     data(){
 
@@ -284,7 +290,8 @@ export default {
     },
     components : {
         draggable,
-        postTask
+        postTask,
+        bottomNavVue
     },
     methods : {
         fetchTasks(){
@@ -400,6 +407,10 @@ export default {
         animation-name: bounce;
         animation-duration: 0.5s;
         /* box-shadow: 10px 100px 1000px 10px rgb(158, 99, 158); */
+    }
+
+    .fxd{
+        display: none;
     }
 
     .styled_modal{
@@ -802,6 +813,18 @@ export default {
         }
         .bs_card_flexed{
             border: 1px solid rgba(255, 255, 255, 0);
+        }
+    }
+
+    @media (max-width: 500px) {
+        .fxd{
+            display: flex;
+            background: rgb(233, 0, 0);
+            z-index: 9999;
+            position: fixed;
+            bottom: 0;
+            height: 20rem;
+            width: 100%;
         }
     }
 </style>
