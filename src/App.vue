@@ -27,6 +27,10 @@ export default {
   font-family: Comfortaa;
 }
 
+::-webkit-scrollbar{
+  display: none;
+}
+
 .primary_text_color{
     color: rgb(140, 78, 255);
   }

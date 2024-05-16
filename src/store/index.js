@@ -34,8 +34,9 @@ export default createStore({
 
     async addTask(context,userPayload){
       const res = await axios.post('http://localhost:3360/tasks', userPayload)
-      toast.success("Your task was successfully added!", {
+      toast("Your task was successfully added!", {
         position: toast.POSITION.TOP_CENTER,
+        "theme": "dark",
       });
       setTimeout(() => {
         window.location.reload()
@@ -55,32 +56,42 @@ export default createStore({
 
     // login config
     async login(context, userPayloadIsValid){
-      const validateInfo = await axios.post('http://localhost:3360/login', userPayloadIsValid)
 
-      $cookies.set('jwt', validateInfo.data.token);
+      try {
+        const validateInfo = await axios.post('http://localhost:3360/login', userPayloadIsValid)
 
-      $cookies.set('role', validateInfo.data.userRole);
-
-      console.log("role: " + validateInfo.data.userRole);
-      
-      const [user] = validateInfo.data.userInServer;
-
-      $cookies.set('userId', user.user_id)
-
-      const userInServ = validateInfo.data.userInServer;
-
-      const storage = JSON.stringify(userInServ);
-
-      localStorage.setItem('userActive', storage);
-
-      toast.success(validateInfo.data.msg, {
-        position: toast.POSITION.TOP_CENTER,
-      });
-      
-      await router.push('/dashBoard');
-      setTimeout(() => {
-        window.location.reload()
-      }, 3000);
+        $cookies.set('jwt', validateInfo.data.token);
+  
+        $cookies.set('role', validateInfo.data.userRole);
+  
+        console.log("role: " + validateInfo.data.userRole);
+        
+        const [user] = validateInfo.data.userInServer;
+  
+        $cookies.set('userId', user.user_id)
+  
+        const userInServ = validateInfo.data.userInServer;
+  
+        const storage = JSON.stringify(userInServ);
+  
+        localStorage.setItem('userActive', storage);
+  
+        toast(validateInfo.data.msg, {
+          position: toast.POSITION.TOP_CENTER,
+          "theme": "dark",
+        });
+        
+        await router.push('/dashBoard');
+        setTimeout(() => {
+          window.location.reload()
+        }, 3000);
+      } catch (error) {
+        toast("Invalid credentials try again", {
+          position: toast.POSITION.TOP_CENTER,
+          "theme": "dark",
+          "type": "error",
+        })
+      }
       
     },
 
@@ -128,8 +139,9 @@ export default createStore({
     async sendTask(context, tID){
 
       const res = await axios.post(`http://localhost:3360/myTasks/${tID}?user_id=${tID}`, tID)
-      toast.success("Your task was successfully sent", {
+      toast("Your task was successfully sent", {
         position: toast.POSITION.TOP_CENTER,
+        "theme": "dark",
       });
 
       setTimeout(() => {
@@ -140,24 +152,26 @@ export default createStore({
 
     async deletePersonalTask(context, tID){
       const res = await axios.delete(`http://localhost:3360/myTasks/${tID}?user_id=${$cookies.get('userId')}`)
-      toast.success("Your task was edited", {
+      toast("Your task has been deleted", {
         position: toast.POSITION.TOP_CENTER,
+        "type": "warning",
       });
 
       setTimeout(() => {
         window.location.reload()
-      }, 2000);
+      }, 3000);
     },
 
     async editPersonalTask(context, update){
       const res = await axios.patch(`http://localhost:3360/tasks/${update.taskId}`, update)
-      toast.success("Your task was edited", {
+      toast("Your task was edited", {
         position: toast.POSITION.TOP_CENTER,
+        "theme": "dark",
       });
 
       setTimeout(() => {
         window.location.reload()
-      }, 2000);
+      }, 3000);
     },
     
     async completeTask(context, update){

@@ -24,8 +24,10 @@
 
             <div class="scrollable_xlg py-3 px-3 mt-4" v-if="$cookies.get('role') === 'admin'">
                 <div v-for="task in $store.state.tasks" v-bind:key="task.taskId">
+
                     <div class="card_rem mb-2">
-                        <div class="container mt-3">
+
+                        <div class="container mt-3 task_Container">
                             <h5>{{task.taskname}}</h5>
                         </div>
                         <div>
@@ -161,14 +163,14 @@
         <div class="right_float">
             <div class="flex_right_align container">
 
-                <div class="mb-2 d-flex justify-content-start border-bottom py-2">
+                <div class="mb-2 d-flex justify-content-start border-bottom py-2 media_QQ">
                     <input type="text" class="rounded-3" placeholder="search" v-model="seachInput.search" @change="searchFn()"/>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-search mx-2 border-0" viewBox="0 0 16 16">
                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                     </svg>
                 </div>
 
-                <div class="over_scroll mb-3 border border-3 resize_option_y">
+                <div class="over_scroll my-3 border border-3 resize_option_y">
                     <p class="mt-3">Your tasks you can assign:</p>
                     <span class="d-flex justify-content-center">
                         <hr class="w-50">
@@ -355,6 +357,9 @@ export default {
 }
 </script>
 <style scoped>
+    ::-webkit-scrollbar{
+        display: none;
+    }
     #align_to_center{
         display: flex;
         justify-content: center;
@@ -595,6 +600,27 @@ export default {
         animation-duration: 0.3s;
     }
 
+    .media_QQ input{
+        width: 100%;
+        height: 2.7rem;
+        border: none;
+        border-radius: 40px !important;
+        background: linear-gradient(rgb(244, 242, 234), rgb(244, 242, 242));
+        border: 1px solid rgb(198, 196, 196);
+        text-indent: 15px;
+    }
+
+
+    .media_QQ svg{
+        position: absolute;
+        right: 1%;
+        margin-top: 11.6px;
+        margin-right: 10px !important;
+        fill: rgb(141, 140, 140) !important;
+    }
+
+
+
     @keyframes opx {
         from {
             opacity: 0;
@@ -667,7 +693,7 @@ export default {
     }
 
 
-    @media (max-width: 998px) {
+    /* @media (max-width: 998px) {
         #align_to_center{
             display: flex;
             justify-content: center;
@@ -676,6 +702,7 @@ export default {
             flex-direction: column;
         }
     }
+     */
     @media (max-width: 1028px) {
         #align_to_center{
             display: flex;
@@ -713,6 +740,27 @@ export default {
             cursor: none;
         }
 
+        .media_QQ input{
+           width: 100%;
+           height: 2.7rem;
+           border: none;
+           border-radius: 40px !important;
+           background: linear-gradient(rgb(244, 242, 234), rgb(244, 242, 242));
+           border: 1px solid rgb(198, 196, 196);
+           text-indent: 15px;
+        }
+        .media_QQ input:hover{
+            border: 1px solid #9433ee;
+        }
+        
+        .media_QQ svg{
+           position: absolute;
+           right: 2.8%;
+           margin-top: 11.6px;
+           margin-right: 10px !important;
+           fill: rgb(141, 140, 140) !important;
+        }
+
         .bs_card_flexed{
             background-color: #FAF9F6;
             border: 1px solid rgba(255, 255, 255, 0);
@@ -728,6 +776,7 @@ export default {
             min-height: 100vh;
             flex-direction: column;
         }
+
         .left_float, .right_float{
             display: flex;
             justify-content: center;
