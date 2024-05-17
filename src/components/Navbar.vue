@@ -250,4 +250,11 @@ import { default } from '../views/DashBoardView.vue';
      height: auto;
      width: 100%;
    }
+
+
+   @media (max-width: 540px) {
+    .btn_logout{
+      display: none;
+    }
+   }
    </style>

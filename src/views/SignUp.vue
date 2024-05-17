@@ -15,7 +15,7 @@
                         <input type="password" class="form-control" id="floatingPassword" v-model="user_password" placeholder="Password">
                         <label for="floatingPassword">Password</label>
                     </div>
-                    <div class="form-floating mb-3">
+                    <div class="form-floating mb-3" hidden>
                         <input type="password" class="form-control" id="floatingUserRole" v-model="user_role" placeholder="User identity" readonly>
                         <label for="floatingUserRole">Identification</label>
                     </div>
@@ -24,12 +24,12 @@
                         <label for="floatingNumber">Phone no.</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingNumber" v-model="user_img" placeholder="Contact details">
-                        <label for="floatingNumber">Profile Image</label>
+                        <input type="text" class="form-control" id="floatingNumber" v-model="user_img" placeholder="Your image" hidden>
+                        <label for="floatingNumber" hidden>Profile Image</label>
                     </div>
                     <button class="w-100 btn btn-lg btn-primary" type="submit" @click="signUp()">Create Acc</button>
                     <hr class="my-4">
-                    <small class="text-body-secondary">Already have an acc <router-link to="/login">click here</router-link></small>
+                    <small class="text-body-secondary">Already have an account <router-link to="/login">click here</router-link></small>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@ export default {
             user_email: '',
             user_password: '',
             user_phoneNo: '',
-            user_img: ''
+            user_img: 'https://cdn-images.imagevenue.com/30/f2/c5/ME18B51X_o.png'
         }
     },
     methods : {

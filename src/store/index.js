@@ -10,7 +10,8 @@ export default createStore({
     assignedTasks: [],
 
     // user specific tasks
-    userTasks: []
+    userTasks: [],
+    users: []
   },
   getters: {
   },
@@ -23,6 +24,9 @@ export default createStore({
     },
     accessUserClientData(state, payload){
       state.userTasks = payload
+    },
+    accessUsers(state, payload){
+      state.users = payload
     }
   },
   actions: {
@@ -160,6 +164,12 @@ export default createStore({
       setTimeout(() => {
         window.location.reload()
       }, 3000);
+    },
+
+    async getUsers(context){
+      const {data} = await axios.get("http://localhost:3360/users")
+      context.commit('accessUsers', data)
+      console.log(data)
     },
 
     async editPersonalTask(context, update){

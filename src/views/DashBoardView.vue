@@ -4,17 +4,22 @@
         <div class="left_float">
             <div class="flex_left_align container">  
                <div class="bs_card_flexed">
-                    <div class="inner_block mx-3 py-4">
-                        inner_block mx-3 py-4
-                    </div>
-                    <div class="inner_block mx-3 py-4">
-                        inner_block mx-3 py-4
-                    </div>
-                    <div class="inner_block mx-3 py-4">
-                        inner_block mx-3 py-4
-                    </div>
-                    <div class="inner_block mx-3 py-4">
-                        inner_block mx-3 py-4
+                    <div class="inner_block my-3 mx-1 py-3" v-for="user in $store.state.users" v-bind:key="user.user_id">
+                        <div>
+                            <img src="https://cdn-images.imagevenue.com/30/f2/c5/ME18B51X_o.png" :alt="user.user_name" class="img img-fluid image_height container-fluid mx-1" />
+                            <div class="mt-2 text-center">
+                                <i class="fa fa-pencil fa-lg" style="color: #8741d8; margin-right:10px;" />
+                                <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
+                            </div>
+                        </div>
+                       <div class="container-fluid">
+                            <span class="small">UUID : <span style="color:red">{{user.user_id}}</span></span>
+                            <br />
+                            <span class="small">Rate : {{Math.random(1).toFixed(3)}}</span>
+                            <h5>{{user.user_name}}</h5>
+                            <p class="small w-100">{{user.user_email}}</p>
+                            <p>{{user.user_phoneNo}}</p>
+                       </div>
                     </div>
                </div>
             </div>  
@@ -188,7 +193,7 @@
                     </div>
                 </div>
                 <div class="mb-2 d-flex justify-content-start border-bottom py-2 media_QQ">
-                    <input type="text" class="rounded-3" placeholder="search" v-model="seachInput.search" @change="searchFn()"/>
+                    <input type="text" class="rounded-3" placeholder="search tasklist ..." v-model="seachInput.search" @change="searchFn()"/>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-search mx-2 border-0" viewBox="0 0 16 16">
                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
                     </svg>
@@ -335,6 +340,9 @@ export default {
         fetchUsersTasks(){
             this.$store.dispatch('getUserData')
         },
+        getUsers(){
+            this.$store.dispatch('getUsers')
+        },
         deleteTask(taskId){
             this.$store.dispatch('deleteTask', taskId)
         },
@@ -395,6 +403,7 @@ export default {
         this.fetchTasks()
         this.fetchUsersTasks()
         this.searchFn()
+        this.getUsers()
     }
 }
 </script>
@@ -409,6 +418,15 @@ export default {
         min-height: 100vh;
         flex-direction: row;
         background-color: rgb(255, 255, 255);
+    }
+
+    .image_height{
+        height: 5rem;
+        width: 5rem;
+        cursor: pointer;
+        border: 1px solid rgba(0, 0, 0, 0.253);
+        border-radius: 50%;
+        object-fit: cover;
     }
 
     .justify_container{
@@ -536,7 +554,7 @@ export default {
         align-items: center;
         flex-direction: column;
         border: 1px solid rgb(255, 255, 255);
-        box-shadow: 3px 2px 10px 2px rgba(0, 0, 0, 0.307);
+        box-shadow: 3px 2px 10px 2px rgba(0, 0, 0, 0.125);
         border-radius: 10px;
         color: black;
         background: linear-gradient(rgb(255, 255, 255), #FAF9F6);
@@ -707,7 +725,7 @@ export default {
         height: 80vh;
         width: auto;
         background: #f0f0ed;
-        border: 1px solid rgba(0, 0, 0, 0.329);
+        border: 1px solid rgba(0, 0, 0, 0.129);
         display: grid;
         grid-template-columns: repeat(1, 1fr);
         justify-content: center;
@@ -734,6 +752,11 @@ export default {
     .inner_block{
         background: white;
         border-radius: 5px;
+        box-shadow: 2px 2px 10px 5px rgba(18, 17, 17, 0.09);
+        display: flex;
+        text-align: start;
+        justify-content: space-around;
+        flex-flow: row !important;
     }
 
     .right_align_style{
@@ -798,9 +821,6 @@ export default {
            background: linear-gradient(rgb(244, 242, 234), rgb(244, 242, 242));
            border: 1px solid rgb(198, 196, 196);
            text-indent: 15px;
-        }
-        .media_QQ input:hover{
-            border: 1px solid #9433ee;
         }
         
         .media_QQ svg{

@@ -22,6 +22,11 @@ const routes = [
     name: 'signUp',
     component: () => import('../views/SignUp.vue')
   },
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () => import('../views/LogoutView.vue')
+  },
 ]
 
 const router = createRouter({

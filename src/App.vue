@@ -44,7 +44,7 @@ export default {
 }
 
 ::selection{
-  background-color: rgb(175, 90, 255);
+  background-color: rgb(194, 143, 242);
   color: black;
 }
 </style>
