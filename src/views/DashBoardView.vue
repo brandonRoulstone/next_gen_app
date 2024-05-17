@@ -163,6 +163,30 @@
         <div class="right_float">
             <div class="flex_right_align container">
 
+                <div class="display_on_mobile_view container-fluid px-1">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text w-50 apply_diff" id="addon-wrapping">Task name</span>
+                        <input v-model="taskname" type="text" id="text-input" class="form-control" placeholder="Task name" aria-label="Task name" aria-describedby="addon-wrapping">
+                    </div>
+                    <div class="input-group flex-nowrap mt-2">
+                        <span class="input-group-text w-50 apply_diff" id="addon-wrapping">Due date</span>
+                        <input v-model="taskdeadline" type="text" id="text-input" class="form-control" placeholder="Task due date" aria-label="Task due date" aria-describedby="addon-wrapping">
+                    </div>
+                    <div v-if="taskdeadline.length === 0 || taskname.length === 0">
+                        <button type="button" class="btn my-2 border border_darken w-100" @click="toastWarn">
+                            <span class="strangerDanger">Fill in the inputs</span> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="rgba(0, 0, 0, 0.578)" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div v-else>
+                        <button type="button" class="btn my-2 border border_success w-100" @click="addTask()">
+                            <span class="suXses">Great! click me now</span> <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="#1eff00" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
                 <div class="mb-2 d-flex justify-content-start border-bottom py-2 media_QQ">
                     <input type="text" class="rounded-3" placeholder="search" v-model="seachInput.search" @change="searchFn()"/>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-search mx-2 border-0" viewBox="0 0 16 16">
@@ -172,6 +196,8 @@
 
                 <div class="over_scroll my-3 border border-3 resize_option_y">
                     <p class="mt-3">Your tasks you can assign:</p>
+                    
+
                     <span class="d-flex justify-content-center">
                         <hr class="w-50">
                     </span>
@@ -194,7 +220,7 @@
                 </div>
                 <hr>
 
-                <div class="right_align_style py-3">
+                <div class="right_align_style py-3" id="display_none_at_mobile">
                     <h5 class="text-white">Add new task</h5>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
@@ -251,17 +277,16 @@
             </div>
 
         </div>
-
         <div class="fxd">
             <bottomNavVue />
         </div>
+
 
     </div>
 
 </template>
 <script>
 import draggable from 'vuedraggable';
-// import bottomNavVue
 import postTask from '../components/postTask.vue'
 import { toast } from "vue3-toastify";
 import bottomNavVue from '@/components/bottomNav.vue';
@@ -292,6 +317,16 @@ export default {
         draggable,
         postTask,
         bottomNavVue
+    },
+    computed: {
+        toastWarn(){
+            let targ = document.getElementById("text-input")
+            targ.style = "border:1px solid red";
+            toast("Add text into the input fields!", {
+                position: toast.POSITION.BOTTOM_CENTER,
+                "type": "warning"
+            });
+        }
     },
     methods : {
         fetchTasks(){
@@ -384,6 +419,10 @@ export default {
 
     .h_100{
         height: 140px;
+    }
+
+    .display_on_mobile_view{
+        display: none;
     }
 
     .flex_align{
@@ -816,15 +855,78 @@ export default {
         }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 540px) {
+        .card_rem h5{
+            font-size: 1rem;
+        }
+        .card_rem p{
+            font-size: .7rem;
+        }
         .fxd{
             display: flex;
-            background: rgb(233, 0, 0);
-            z-index: 9999;
+            justify-content: center;
+            z-index: 99;
             position: fixed;
             bottom: 0;
-            height: 20rem;
+            height: 5rem;
             width: 100%;
         }
+
+        .suXses{
+            color: #1eff00;
+        }
+        .strangerDanger{
+            color: rgb(35, 34, 34);
+        }
+        .border_success{
+            border: 1px solid #1eff00 !important;
+        }
+
+        .display_on_mobile_view{
+            display: block;
+        }
+
+        .apply_diff{
+            background: rgb(35, 35, 36) !important;
+            color: white;
+        }
+
+        #checkbox {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #9433ee;
+            border-radius: 5px;
+            background-color: transparent;
+            display: inline-block;
+            position: relative;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        #checkbox:before {
+            content: "";
+            background-color: #1eff00;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 7.5px;
+            height: 7.5px;
+            border-radius: 3px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .delete, .edit{
+            background: none;
+            border: none;
+            transform: scale(70%);
+        }
+
+        #display_none_at_mobile{
+            display: none;
+        }
+
     }
 </style>
