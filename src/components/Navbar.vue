@@ -17,7 +17,11 @@ import { default } from '../views/DashBoardView.vue';
            <li><router-link to="/dashboard" v-if="$cookies.get('jwt')">Dashboard</router-link></li>
            <!-- <li><router-link to="/" v-if="$cookies.get('jwt')">My tasks</router-link></li> -->
            <!-- <li><router-link to="/" v-if="$cookies.get('jwt')">Users</router-link></li> -->
-           <li class="small gap-2"><router-link to="/signUp" v-if="!$cookies.get('jwt')"><button class="btn px-4 py-1 btn_login">Login</button></router-link><button v-if="$cookies.get('jwt')" class="btn btn_logout px-4 py-1" @click="logOut()">Logout</button></li>
+            <li class="small gap-2">
+              <router-link to="/signUp" v-if="!$cookies.get('jwt')" class="btn px-4 py-2 btn_reg rounded-4">Register</router-link>
+              <router-link to="/login" v-if="!$cookies.get('jwt')" class="btn px-4 py-2 btn_login rounded-4">Login</router-link>
+              <button v-if="$cookies.get('jwt')" class="btn btn_logout px-4 py-1" @click="logOut()">Logout</button>
+            </li>
          </ul>
        </div>
      </div>
@@ -46,6 +50,27 @@ import { default } from '../views/DashBoardView.vue';
    .btn_logout{
     background-color: rgb(255, 35, 35);
     color: white;
+   }
+
+   .btn_reg, .btn_login{
+    font-size: .9rem;
+    width: 100%;
+   }
+
+   .btn_reg{
+    border: 1px solid #8841d8;
+    color: rgb(32, 32, 32);
+   }
+
+   .btn_reg:hover, .btn_login:hover{
+    color: #8841d8 !important;
+    background-color: #ffffff00;
+    border: 1px solid #8841d8;  /* for login btn hover */
+   }
+
+   .btn_login{
+    background-color: #8841d8;
+    color: rgb(246, 242, 242);
    }
 
     header{
@@ -204,14 +229,14 @@ import { default } from '../views/DashBoardView.vue';
      display: flex;
      align-self: center;
    }
-   .small a {
+   /* .small a {
      font-size: 12px;
      font-weight: 400;
      color: #ffffff;
      background-color: green;
      width: 100%;
      align-items: center;
-   }
+   } */
    .small a + a {
      margin-left: 15px;
    }

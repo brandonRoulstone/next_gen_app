@@ -7,7 +7,7 @@
                     <div class="inner_block my-3 mx-1 py-3" v-for="user in $store.state.users" v-bind:key="user.user_id">
                         <div>
                             <img src="https://cdn-images.imagevenue.com/30/f2/c5/ME18B51X_o.png" :alt="user.user_name" class="img img-fluid image_height container-fluid mx-1" />
-                            <div class="mt-2 text-center">
+                            <div class="mt-2 text-center" v-if="$cookies.get('role') === 'admin'">
                                 <i class="fa fa-pencil fa-lg" style="color: #8741d8; margin-right:10px;" />
                                 <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
                             </div>

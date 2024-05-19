@@ -92,7 +92,7 @@ export default createStore({
       } catch (error) {
         toast("Invalid credentials try again", {
           position: toast.POSITION.TOP_CENTER,
-          "theme": "dark",
+          "theme": "light",
           "type": "error",
         })
       }
@@ -142,7 +142,7 @@ export default createStore({
     // will select user first by Id and send the task to user
     async sendTask(context, tID){
 
-      const res = await axios.post(`http://localhost:3360/myTasks/${tID}?user_id=${tID}`, tID)
+      const res = await axios.post(`http://localhost:3360/send`, tID)
       toast("Your task was successfully sent", {
         position: toast.POSITION.TOP_CENTER,
         "theme": "dark",

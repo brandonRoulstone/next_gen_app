@@ -1,35 +1,40 @@
 <template lang="">
     <div class="adjust_height">
+        <div>
+            <h4><div class="outerDot"><div class="dot"></div></div> Create a new account</h4>
+            <h2>Sign up and Start</h2>
+            <p>Just jot down your todos in a simpler way!</p>
+        </div>
         <div class="mt-5">
             <div class="w-100">
                 <div class="p-4 p-md-5 border rounded-3 bg-body-tertiary">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingName" v-model="user_name" placeholder="John">
+                        <input type="text" class="form-control input_lestyle" id="floatingName" v-model="user_name" placeholder="John">
                         <label for="floatingName">Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" v-model="user_email" placeholder="name@example.com">
+                        <input type="email" class="form-control input_lestyle" id="floatingInput" v-model="user_email" placeholder="name@example.com">
                         <label for="floatingInput">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" v-model="user_password" placeholder="Password">
+                        <input type="password" class="form-control input_lestyle" id="floatingPassword" v-model="user_password" placeholder="Password">
                         <label for="floatingPassword">Password</label>
                     </div>
                     <div class="form-floating mb-3" hidden>
-                        <input type="password" class="form-control" id="floatingUserRole" v-model="user_role" placeholder="User identity" readonly>
+                        <input type="password" class="form-control input_lestyle" id="floatingUserRole" v-model="user_role" placeholder="User identity" readonly>
                         <label for="floatingUserRole">Identification</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingNumber" v-model="user_phoneNo" placeholder="Contact details">
+                        <input type="text" class="form-control input_lestyle" id="floatingNumber" v-model="user_phoneNo" placeholder="Contact details">
                         <label for="floatingNumber">Phone no.</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingNumber" v-model="user_img" placeholder="Your image" hidden>
+                        <input type="text" class="form-control input_lestyle" id="floatingNumber" v-model="user_img" placeholder="Your image" hidden>
                         <label for="floatingNumber" hidden>Profile Image</label>
                     </div>
-                    <button class="w-100 btn btn-lg btn-primary" type="submit" @click="signUp()">Create Acc</button>
+                    <button class="w-100 btn btn-lg btn_styled" type="submit" @click="signUp()">Create Acc</button>
                     <hr class="my-4">
-                    <small class="text-body-secondary">Already have an account <router-link to="/login">click here</router-link></small>
+                    <small class="text-body-secondary">Already have an account <router-link to="/login" class="themify">click here</router-link></small>
                 </div>
             </div>
         </div>
@@ -66,5 +71,95 @@ export default {
         justify-content: center;
         align-items: center;
         min-height: 100vh;
+        min-width: 100vw;
+        gap: 5rem;
+        cursor: none;
+    }
+
+    p {
+        color: #7a7a7b;
+    }
+
+    .themify{
+        color: #8841d8;
+    }
+
+    .input_lestyle{
+        border-radius: 10px;
+        background-color: #ffffff !important;
+        border: 1px solid rgba(28, 28, 28, 0.446);
+        width: 100%;
+    }
+
+    .hide_overflow{
+        overflow: hidden;
+    }
+
+    .btn_styled{
+        color: #8841d8;
+        border: 1px solid rgb(117, 70, 198) !important;
+    }
+    .btn_styled:hover{
+        color: #ffffff;
+        background-color: #8841d8;
+    }
+
+    .outerDot{
+        border: 1px solid #8841d8;
+        width: 1.12rem;
+        height: 1.12rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+    }
+
+    .dot{
+        height: .6rem;
+        width: .6rem;
+        background: #8841d8;
+        border-radius: 50%;
+    }
+
+    .dot::after{
+        content: "";
+        position: absolute;
+        top: 26%;
+        display: flex;
+        justify-content: center;
+        height: 6.58rem;
+        width: 17rem;
+        background-image: url("https://cdn-images.imagevenue.com/f1/ba/3e/ME18BMIA_o.png");
+        box-shadow: .2px .2px 10px .2px rgb(222, 222, 222);
+        border-radius: 20px;
+        border-bottom-left-radius: 0px;
+        animation-name: spanAcc;
+        animation-duration: .4s;
+    }
+
+    @keyframes spanAcc {
+        from{
+            width: 0rem;
+        }
+        to{
+            width: 17rem;
+        }
+    }
+
+    @media (max-width: 790px) {
+        .adjust_height{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            min-width: 100vw;
+            gap: 1rem;
+            margin-top: 1rem;
+            cursor: none;
+        }
+        .dot{
+            display: none;
+        }
     }
 </style>

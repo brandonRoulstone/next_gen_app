@@ -1,6 +1,6 @@
 import { toast } from 'vue3-toastify';
 <template lang="">
-    <div v-if="$cookies.get('role') === 'admin'">
+    <div>
         <div class="right_align_style h_100 py-3 my-3" v-if="openMod.open === true">
            
             <div class="modal_fixed container" id="modal">
