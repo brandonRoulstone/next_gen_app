@@ -201,7 +201,6 @@
 
                 <div class="over_scroll my-3 border border-3 resize_option_y">
                     <p class="mt-3">Your tasks you can assign:</p>
-                    
 
                     <span class="d-flex justify-content-center">
                         <hr class="w-50">
@@ -438,6 +437,9 @@ export default {
     .h_100{
         height: 140px;
     }
+    /* .h_100vh{
+        height: 140px;
+    } */
 
     .display_on_mobile_view{
         display: none;
@@ -736,7 +738,7 @@ export default {
 
     .over_scroll{
         overflow-y: scroll;
-        max-height: 150px;
+        max-height: 450px;
     }
 
     .over_scroll_sm{
