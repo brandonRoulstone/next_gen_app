@@ -1,6 +1,6 @@
 <template lang="">
     <div class="adjust_height container">
-        <div>
+        <div class="adjust_margin">
             <h4><div class="outerDot"><div class="dot"></div></div> Better than your average todo list</h4>
             <h2>Forget fancy Task management</h2>
             <p>Just jot down your todos in a simpler way!</p>
@@ -159,6 +159,9 @@ export default {
         }
         .dot{
             display: none;
+        }
+        .adjust_margin{
+            margin-top: 4.5rem;
         }
     }
 </style>

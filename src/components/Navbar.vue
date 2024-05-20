@@ -3,7 +3,15 @@ import { default } from '../views/DashBoardView.vue';
     <div id="navbar" class="bg-white"> 
      <nav class="navbar bg-white">
       <div class="page">
-       <header tabindex="0"></header>
+       <header tabindex="0">
+        <div class="psFxd py-1 px-2" v-for="user in getLoggedInUser()" v-bind:key="user.user_id">
+          <img class="iamage" :src="user.user_img" :alt="user.user_name" height="20x" width="20px">
+          <div class="text-start">
+            <p class="mb-1">{{ user.user_name }}</p>
+            <p>{{ user.user_email }}</p>
+          </div>
+        </div>
+       </header>
         <div id="nav-container">
        <div class="bg"></div>
           <div class="button" tabindex="0">
@@ -36,15 +44,48 @@ import { default } from '../views/DashBoardView.vue';
         logOut(){
           this.$store.dispatch('logout')
         },
+        getLoggedInUser(){
+          let userVars = JSON.parse(localStorage.getItem('userActive')) || [];
+          console.log(userVars);
+          return userVars;
+        }
       },
+      mounted(){
+        this.getLoggedInUser()
+      }
     }
   </script>
 
    <style scoped>
    #navbar{
-     position: fixed;
-     top: -1%;
-     z-index: 2000;
+    position: fixed;
+    top: -1%;
+    z-index: 2000;
+   }
+
+
+   .psFxd{
+      position: fixed;
+      right: .5%;
+      top: 22%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: .7rem;
+      gap: .5rem;
+      color: #212121;
+      background: white;
+      border-radius: 10px;
+      box-shadow: .5px .5px 3px .7px rgba(0, 0, 0, 0.2);
+    }
+
+   .iamage{
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid #2121213b;
    }
 
    .btn_logout{
@@ -74,7 +115,7 @@ import { default } from '../views/DashBoardView.vue';
    }
 
     header{
-     background: rgb(243, 243, 243);
+     background: rgb(240, 235, 235);
      backdrop-filter: blur(12px);
      border: none;
     }
@@ -140,7 +181,7 @@ import { default } from '../views/DashBoardView.vue';
      visibility: hidden;
      opacity: 0;
      transition: .3s;
-     background: #000;
+     background: #ffffff00;
    }
    #nav-container:focus-within .bg {
      visibility: visible;
@@ -281,5 +322,9 @@ import { default } from '../views/DashBoardView.vue';
     .btn_logout{
       display: none;
     }
+
+    /* .psFxd{
+      display: none;
+    } */
    }
    </style>

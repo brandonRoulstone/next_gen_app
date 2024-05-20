@@ -241,7 +241,7 @@
                             <div class="modal-content styled_modal">
 
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add a new task</h1>
                                     <button type="button" class="close_btn" data-bs-dismiss="modal">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="red" class="bi bi-x-circle" viewBox="0 0 16 16">
                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
@@ -564,6 +564,7 @@ export default {
         min-width: 20vw;
         box-shadow: 1px 10px 17px 10px rgba(34, 34, 35, 0.125);
         background-color: #FAF9F6;
+        cursor: none;
     }
 
     .card_rem{
