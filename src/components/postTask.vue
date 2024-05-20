@@ -58,7 +58,7 @@ export default {
     },
     methods: {
         sendTaskToPeer(){
-            this.$store.dispatch('sendTask', this.$data)
+            this.$store.dispatch('sendTask', this.$data);
         },
         closeModal(){
             this.openMod.open = false

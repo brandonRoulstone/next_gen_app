@@ -9,13 +9,13 @@
                             <img src="https://cdn-images.imagevenue.com/30/f2/c5/ME18B51X_o.png" :alt="user.user_name" class="img img-fluid image_height container-fluid mx-1" />
                             <div class="mt-2 text-center" v-if="$cookies.get('role') === 'admin'">
                                 <i class="fa fa-pencil fa-lg" style="color: #8741d8; margin-right:10px;" />
-                                <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
+                                <i class="fa-solid fa-trash-can fa-lg" style="color: #9433ee;"></i>
                             </div>
                         </div>
                        <div class="container-fluid">
-                            <span class="small">UUID : <span style="color:red">{{user.user_id}}</span></span>
+                            <span class="small">User ID : <span style="color:red">{{user.user_id}}</span></span>
                             <br />
-                            <span class="small">Rate : {{Math.random(1).toFixed(3)}}</span>
+                            <!-- <span class="small">Rate : {{Math.random(1).toFixed(3)}}</span> -->
                             <h5>{{user.user_name}}</h5>
                             <p class="small w-100">{{user.user_email}}</p>
                             <p>{{user.user_phoneNo}}</p>
@@ -49,7 +49,7 @@
                                 <input type="checkbox" id="checkbox" @click="completeTask(task.taskId)" v-modal="task.completed"/>
                             </div>
                             <button class="delete" @click="deleteTask(task.taskId)">
-                                <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
+                                <i class="fa-solid fa-trash-can fa-lg" style="color: #9433ee;"></i>
                             </button>
                             <button class="edit" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+task.taskId">
                                 <i class="fa-solid fa-pencil fa-lg" style="color: #9433ee;"></i>
@@ -117,7 +117,7 @@
                                 <input type="checkbox" id="checkbox" @click="completeTask(task.taskId)" v-modal="task.completed"/>
                             </div>
                             <button class="delete" @click="deletePersonalTask(task.taskId)">
-                                <i class="fa-solid fa-trash fa-lg" style="color: #9433ee;"></i>
+                                <i class="fa-solid fa-trash-can fa-lg" style="color: #9433ee;"></i>
                             </button>
                             <button class="edit" data-bs-toggle="modal" :data-bs-target="'#staticBackdrop'+task.taskId">
                                 <i class="fa-solid fa-pencil fa-lg" style="color: #9433ee;"></i>
@@ -207,12 +207,13 @@
                     </span>
                     <div v-for="tasks in searchFn()">
                         <div class="small container text-start mt-2 card_in_sRes d-flex justify-content-center">
+                            <div class="hoverMe cursor_point" title="TaskId">{{tasks.taskId}}</div>
                             <div class="d-flex container-fluid w-100 justify-content-center align-items-center">
                                 <p class="small over_scroll_sm">{{ tasks.taskname }}</p>
                                 <div class="d-flex container-fluid w-100 justify-content-end">
-                                    <div id="complete" v-if="tasks.completed === 1" title="completed task">
+                                    <div id="complete" class="cursor_point" v-if="tasks.completed === 1" title="completed task">
                                     </div>
-                                    <div id="incomplete" v-else title="incompleted task">
+                                    <div id="incomplete" class="cursor_point" v-else title="incompleted task">
                                     </div>
                                 </div>
                             </div>
@@ -468,6 +469,10 @@ export default {
         /* box-shadow: 10px 100px 1000px 10px rgb(158, 99, 158); */
     }
 
+    .cursor_point{
+        cursor: pointer;
+    }
+
     .fxd{
         display: none;
     }
@@ -517,6 +522,19 @@ export default {
     .resize_option_xY{
         resize: both;
         overflow: auto;
+    }
+
+
+    .hoverMe{
+        height: 1.2rem;
+        width: 1.2rem;
+        background: #692b94;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: .6rem;
+        border-radius: 50%;
+        color: #FAF9F6;
     }
 
 
