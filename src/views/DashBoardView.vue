@@ -3,7 +3,7 @@
 
         <div class="left_float">
             <div class="flex_left_align container">  
-               <div class="bs_card_flexed">
+               <div class="bs_card_flexed gap-3">
                     <div class="inner_block my-3 mx-1 py-3" v-for="user in $store.state.users" v-bind:key="user.user_id">
                         <div>
                             <img src="https://cdn-images.imagevenue.com/30/f2/c5/ME18B51X_o.png" :alt="user.user_name" class="img img-fluid image_height container-fluid mx-1" />
@@ -15,9 +15,7 @@
                        <div class="container-fluid">
                             <span class="small">User ID : <span style="color:red">{{user.user_id}}</span></span>
                             <br />
-                            <!-- <span class="small">Rate : {{Math.random(1).toFixed(3)}}</span> -->
                             <h5>{{user.user_name}}</h5>
-                            <p class="small w-100">{{user.user_email}}</p>
                             <p>{{user.user_phoneNo}}</p>
                        </div>
                     </div>
@@ -43,10 +41,10 @@
                                 <p>{{task.taskdeadline}}</p>
                             </div>
                             <div v-if="task.completed === 1">
-                                <input type="checkbox" id="checkbox" @click="completeTask(task.taskId)" checked v-modal="task.completed"/>
+                                <input type="checkbox" id="checkbox" @click="completeTask()" checked v-modal="task.completed"/>
                             </div>
                             <div v-else>
-                                <input type="checkbox" id="checkbox" @click="completeTask(task.taskId)" v-modal="task.completed"/>
+                                <input type="checkbox" id="checkbox" @click="completeTask()" v-modal="task.completed"/>
                             </div>
                             <button class="delete" @click="deleteTask(task.taskId)">
                                 <i class="fa-solid fa-trash-can fa-lg" style="color: #9433ee;"></i>
@@ -99,8 +97,7 @@
             <div class="scrollable_xlg py-3 px-5 mt-4" v-else>
                 <div v-for="task in $store.state.userTasks" v-bind:key="task.taskId" v-if="$store.state.userTasks.length > 0">
                     <div class="card_rem mb-2">
-                        <div class="container mt-3">
-                            
+                        <div class="container mt-3">  
                             <h5>{{task.taskname}}</h5>
                         </div>
                         <div>
@@ -199,12 +196,15 @@
                     </svg>
                 </div>
 
-                <div class="over_scroll my-3 border border-3 resize_option_y">
-                    <p class="mt-3">Your tasks you can assign:</p>
+                <div class="sidebar_head">
+                    <p class="mt-3">Task list (global)</p>
 
                     <span class="d-flex justify-content-center">
                         <hr class="w-50">
                     </span>
+                </div>
+
+                <div class="over_scroll my-3 border border-3 resize_option_y">
                     <div v-for="tasks in searchFn()">
                         <div class="small container text-start mt-2 card_in_sRes d-flex justify-content-center">
                             <div class="hoverMe cursor_point" title="TaskId">{{tasks.taskId}}</div>
@@ -226,9 +226,9 @@
                 <hr>
 
                 <div class="right_align_style py-3" id="display_none_at_mobile">
-                    <h5 class="text-white">Add new task</h5>
+                    <h5 class="text-black">Add new task</h5>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="rgb(12,12,12)" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
                         </svg>
                     </button>
@@ -389,11 +389,10 @@ export default {
             }
             this.$store.dispatch('editPersonalTask', TaskObjx)
         },
-        completeTask(taskId){
-            let TaskObjx = {
-                taskId: taskId
-            }
-            this.$store.dispatch('completeTask', TaskObjx)
+        completeTask(){
+            toast.warning("Click on edit then insert a 1 for completed or 0 for incomplete",{
+                position: 'top-center'
+            });
         },
         randomMsg(){
             toast("hello you here")
@@ -781,9 +780,10 @@ export default {
     }
 
     .right_align_style{
-        border: 1px solid rgb(6, 6, 6);
+        border: 1px solid rgba(6, 6, 6, 0.204);
         border-radius: 10px;
-        background-color: #0f0f0f;
+        background-color: #ffffff00;
+        /* color: rgb(12, 12, 12); */
     }
 
 

@@ -28,9 +28,9 @@ const routes = [
     component: () => import('../views/LogoutView.vue')
   },
   {
-    path: '/yourprofile',
-    name: 'yourprofile',
-    component: () => import('../views/userProfile.vue')
+    path: '/chatToPeer',
+    name: 'chatToPeer',
+    component: () => import('../views/chatView.vue')
   },
 ]
 

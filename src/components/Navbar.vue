@@ -1,14 +1,15 @@
-import { default } from '../views/DashBoardView.vue';
 <template>
     <div id="navbar" class="bg-white"> 
      <nav class="navbar bg-white">
       <div class="page">
        <header tabindex="0">
-        <div class="psFxd py-1 px-2" v-for="user in getLoggedInUser()" v-bind:key="user.user_id">
-          <img class="iamage" :src="user.user_img" :alt="user.user_name" height="20x" width="20px">
-          <div class="text-start">
-            <p class="mb-1">{{ user.user_name }}</p>
-            <p>{{ user.user_email }}</p>
+        <div v-if="$cookies.get('jwt')">
+          <div class="psFxd py-1 px-2" v-for="user in getLoggedInUser()" v-bind:key="user.user_id">
+            <img class="iamage" :src="user.user_img" :alt="user.user_name" height="20x" width="20px">
+            <div class="text-start">
+              <p class="mb-1">{{ user.user_name }} | id : {{ user.user_id }}</p>
+              <p>{{ user.user_email }}</p>
+            </div>
           </div>
         </div>
        </header>
@@ -23,8 +24,7 @@ import { default } from '../views/DashBoardView.vue';
          <ul>
            <li><router-link to="/">Home</router-link></li>
            <li><router-link to="/dashboard" v-if="$cookies.get('jwt')">Dashboard</router-link></li>
-           <!-- <li><router-link to="/" v-if="$cookies.get('jwt')">My tasks</router-link></li> -->
-           <!-- <li><router-link to="/" v-if="$cookies.get('jwt')">Users</router-link></li> -->
+           <li><router-link to="/chatToPeer" v-if="$cookies.get('jwt')">Chat</router-link></li>
             <li class="small gap-2">
               <router-link to="/signUp" v-if="!$cookies.get('jwt')" class="btn px-4 py-2 btn_reg rounded-4">Register</router-link>
               <router-link to="/login" v-if="!$cookies.get('jwt')" class="btn px-4 py-2 btn_login rounded-4">Login</router-link>
