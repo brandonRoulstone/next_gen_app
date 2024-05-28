@@ -11,7 +11,8 @@ export default createStore({
 
     // user specific tasks
     userTasks: [],
-    users: []
+    users: [],
+    globalChat: []
   },
   getters: {
   },
@@ -27,6 +28,9 @@ export default createStore({
     },
     accessUsers(state, payload){
       state.users = payload
+    },
+    accessGlobalChat(state, payload){
+      state.globalChat = payload
     }
   },
   actions: {
@@ -195,6 +199,27 @@ export default createStore({
         window.location.reload()
       }, 2000);
 
+    },
+    async chatBox (context){
+      const { data } = await axios.get("http://localhost:3360/chat");
+      context.commit("accessGlobalChat", data);
+      console.log(data);
+    },
+    async chatFn(context, content){
+      const res =  await axios.post("http://localhost:3360/chat", content);
+      console.log(res.data);
+      window.location.reload()
+    },
+    async deleteMessage(context, comment_id){
+      const res = await axios.delete(`http://localhost:3360/chat/${comment_id}`);
+
+      toast.success("This action will delete for everyone in the server", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 3000);
     }
     
   },
