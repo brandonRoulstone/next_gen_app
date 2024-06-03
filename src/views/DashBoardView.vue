@@ -196,13 +196,13 @@
                     </svg>
                 </div>
 
-                <div class="sidebar_head">
+                <!-- <div class="sidebar_head">
                     <p class="mt-3">Task list (global)</p>
 
                     <span class="d-flex justify-content-center">
                         <hr class="w-50">
                     </span>
-                </div>
+                </div> -->
 
                 <div class="over_scroll my-3 border border-3 resize_option_y">
                     <div v-for="tasks in searchFn()">
