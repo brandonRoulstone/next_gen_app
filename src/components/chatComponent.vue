@@ -1,5 +1,5 @@
 <template lang="">
-    <div class="chatUI">
+    <div class="chatUI" v-if="$cookies.get('role') === 'admin'">
         
         <div class="container mt-5">
 
@@ -46,6 +46,9 @@
             <p class="text-white animate">Powered by MotionZ <span>.</span> <span>.</span> <span>.</span></p>
         </div>
 
+    </div>
+    <div class="">
+        <h1>FEATURE COMING SOON...</h1>
     </div>
 </template>
 <script>

@@ -24,11 +24,11 @@
          <ul>
            <li><router-link to="/">Home</router-link></li>
            <li><router-link to="/dashboard" v-if="$cookies.get('jwt')">Dashboard</router-link></li>
-           <li><router-link to="/chatToPeer" v-if="$cookies.get('jwt')">Chat</router-link></li>
+           <li><router-link to="/chatToPeer" v-if="$cookies.get('role') === 'admin'">Chat</router-link></li>
             <li class="small gap-2">
               <router-link to="/signUp" v-if="!$cookies.get('jwt')" class="btn px-4 py-2 btn_reg rounded-4">Register</router-link>
               <router-link to="/login" v-if="!$cookies.get('jwt')" class="btn px-4 py-2 btn_login rounded-4">Login</router-link>
-              <button v-if="$cookies.get('jwt')" class="btn btn_logout px-4 py-1" @click="logOut()">Logout</button>
+              <router-link to="/logout" v-if="$cookies.get('jwt')" class="btn btn_logout px-4 py-1">Logout</router-link>
             </li>
          </ul>
        </div>
